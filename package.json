@@ -1,0 +1,29 @@
+{
+  "name": "protobufjs-stream",
+  "version": "0.0.1",
+  "description": "ProtoBuf stream",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "keywords": [
+    "ProtoBuf",
+    "stream"
+  ],
+  "author": "Juan Benet <juan@benet.ai> (http://juan.benet.ai/)",
+  "license": "MIT",
+  "dependencies": {
+    "through2": "~0.4.2"
+  },
+  "devDependencies": {
+    "tape": "~2.13.1",
+    "buffer-equal": "0.0.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jbenet/protobufjs-stream.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jbenet/protobufjs-stream/issues"
+  }
+}
