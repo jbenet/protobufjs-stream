@@ -1,5 +1,4 @@
 var _ = require('underscore');
-var ProtoBuf = require('protobufjs');
 var through2 = require('through2');
 
 module.exports = ProtoBufTransformer
