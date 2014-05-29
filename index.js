@@ -1,5 +1,6 @@
 var _ = require('underscore');
 var through2 = require('through2');
+var ByteBuffer = require('bytebuffer');
 
 module.exports = ProtoBufTransformer
 
@@ -19,7 +20,7 @@ ProtoBufTransformer.prototype.encode = function(obj) {
 }
 
 ProtoBufTransformer.prototype.decode = function(buffer) {
-  return copy(this.proto.decode(buffer)) // copy to get raw object
+  return convert(this.proto.decode(buffer)) // copy to get raw object
 }
 
 ProtoBufTransformer.prototype.createEncodeStream = function(opts) {
@@ -45,10 +46,24 @@ function isProtoBufObj(obj) {
   return  _.all(fns, _.isFunction)
 }
 
-function copy(obj) {
-  var c = {}
-  _.map(obj, function(v, k) {
-    c[k] = obj[k]
-  })
-  return c
+function convert(o) {
+  if (_.isNumber(o) || _.isString(o) || _.isDate(o) ||
+      _.isBoolean(o) || _.isNull(o) || _.isUndefined(o))
+    return o
+
+  if (_.isArray(o))
+    return _.map(o, convert)
+
+  if (ByteBuffer.isByteBuffer(o))
+    return o.toBuffer()
+
+  if (typeof(o) === 'object') {
+    var c = {}
+    _.map(o, function(v, k) {
+      c[k] = convert(o[k])
+    })
+    return c
+  }
+
+  throw new Error("unknown object: " + obj)
 }
